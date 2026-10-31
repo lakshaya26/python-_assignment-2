@@ -1,0 +1,47 @@
+def normalise(text):
+
+    text = text.replace(" ", "")
+    text = text.replace("-", "")
+
+    return text.upper()
+
+
+def is_valid(reg):
+
+    if len(reg) not in [9, 10]:
+        return False
+
+    state = reg[0:2]
+    district = reg[2:4]
+
+    if len(reg) == 9:
+        series = reg[4:5]
+        number = reg[5:9]
+
+    else:
+        series = reg[4:6]
+        number = reg[6:10]
+
+    return (
+        state.isalpha()
+        and district.isdigit()
+        and series.isalpha()
+        and number.isdigit()
+    )
+
+
+for raw in [
+    "tn 09 ab 1234",
+    "KA-01-M-0007",
+    "TN9AB1234",
+    "TN 22 1234 AB"
+]:
+
+    reg = normalise(raw)
+
+    print(
+        raw,
+        "->",
+        reg,
+        "valid" if is_valid(reg) else "INVALID"
+    )
